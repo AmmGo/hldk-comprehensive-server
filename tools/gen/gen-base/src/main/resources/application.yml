@@ -1,0 +1,5 @@
+spring:
+  freemarker:
+    cache: false
+    template-loader-path: ["classpath:/template/"]
+    prefer-file-system-access: false

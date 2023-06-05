@@ -1,0 +1,426 @@
+{
+  "apifoxProject": "1.0.0",
+  "info": {
+    "name": "示例项目",
+    "description": "",
+    "mockRule": {
+      "rules": [],
+      "enableSystemRule": true
+    }
+  },
+  "responseCollection": [
+    {
+      "jsonSchema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string",
+            "mock": {
+              "mock": "Not found"
+            }
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ],
+        "x-apifox-orders": [
+          "code",
+          "message"
+        ]
+      },
+      "defaultEnable": false,
+      "name": "记录不存在",
+      "code": 404,
+      "contentType": "json",
+      "id": "75640509"
+    },
+    {
+      "jsonSchema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "mock": {
+              "mock": "401"
+            }
+          },
+          "message": {
+            "type": "string",
+            "mock": {
+              "mock": "Invalid Param"
+            }
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ],
+        "x-apifox-orders": [
+          "code",
+          "message"
+        ]
+      },
+      "defaultEnable": false,
+      "name": "参数不正确",
+      "code": 401,
+      "contentType": "json",
+      "id": "75640510"
+    },
+    {
+      "jsonSchema": {
+        "type": "object",
+        "properties": {},
+        "x-apifox-orders": []
+      },
+      "defaultEnable": false,
+      "name": "修改成功",
+      "code": 200,
+      "contentType": "json",
+      "id": "75640511"
+    },
+    {
+      "jsonSchema": {
+        "type": "object",
+        "properties": {},
+        "x-apifox-orders": []
+      },
+      "defaultEnable": false,
+      "name": "新建成功",
+      "code": 201,
+      "contentType": "json",
+      "id": "75640512"
+    }
+  ],
+  "apiCollection": [
+    {
+      "name": "网格化-楼栋表",
+      "parentId": 0,
+      "serverId": "",
+      "description": "",
+      "preProcessors": [],
+      "postProcessors": [],
+      "auth": {},
+      "items": [
+        {
+          "name": "列表查询",
+          "api": {
+            "id": "9379169146",
+            "method": "get",
+            "path": "/building/list",
+            "parameters": {
+              "head": [
+                {
+                  "required": true,
+                  "name": "TOKEN",
+                  "description": "验证参数",
+                  "type": "string",
+                  "sampleValue": "ad3e02737b5b47f9a42e88bd57477552"
+                }
+              ],
+              "query": [
+                {
+                  "required": true,
+                  "name": "建筑名称",
+                  "description": "建筑名称匹配查询",
+                  "type": "String",
+                  "sampleValue": ""
+                },
+                {
+                  "required": false,
+                  "name": "详细地址",
+                  "description": "详细地址匹配查询",
+                  "type": "String",
+                  "sampleValue": ""
+                },
+                {
+                  "required": false,
+                  "name": "中心点",
+                  "description": "中心点匹配查询",
+                  "type": "String",
+                  "sampleValue": ""
+                },
+                {
+                  "required": false,
+                  "name": "独栋 1是0否",
+                  "description": "独栋 1是0否匹配查询",
+                  "type": "Integer",
+                  "sampleValue": ""
+                },
+                {
+                  "required": false,
+                  "name": "区县ID",
+                  "description": "区县ID匹配查询",
+                  "type": "Integer",
+                  "sampleValue": ""
+                },
+                {
+                  "required": false,
+                  "name": "乡镇ID",
+                  "description": "乡镇ID匹配查询",
+                  "type": "Integer",
+                  "sampleValue": ""
+                },
+                {
+                  "required": false,
+                  "name": "社区ID",
+                  "description": "社区ID匹配查询",
+                  "type": "Integer",
+                  "sampleValue": ""
+                },
+                {
+                  "required": false,
+                  "name": "网格ID",
+                  "description": "网格ID匹配查询",
+                  "type": "Integer",
+                  "sampleValue": ""
+                },
+                {
+                  "required": false,
+                  "name": "小区ID",
+                  "description": "小区ID匹配查询",
+                  "type": "Integer",
+                  "sampleValue": ""
+                }
+              ]
+            },
+            "auth": [],
+            "commonParameters": {
+              "cookie": [],
+              "query": [],
+              "header": [],
+              "body": []
+            },
+            "responses": [
+              {
+                "id": "9881214935",
+                "name": "成功",
+                "code": 200,
+                "contentType": "json",
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string",
+                      "description": "消息",
+                      "title": "消息"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "状态码",
+                      "title": "状态码"
+                    },
+                    "data": {
+                      "type": "array",
+                      "description": "返回集合数据",
+                      "title": "返回集合数据",
+                      "items": {
+                        "type": "object",
+                        "description": "数组实体",
+                        "title": "数组实体",
+                        "properties": {
+                          "address": {
+                            "type": "string",
+                            "description": "详细地址",
+                            "title": "address"
+                          },
+                          "center": {
+                            "type": "string",
+                            "description": "中心点",
+                            "title": "center"
+                          },
+                          "creatorId": {
+                            "type": "integer",
+                            "description": "创建人ID",
+                            "title": "creatorId"
+                          },
+                          "updateTime": {
+                            "type": "string",
+                            "description": "修改时间",
+                            "title": "updateTime"
+                          },
+                          "single": {
+                            "type": "integer",
+                            "description": "独栋 1是0否",
+                            "title": "single"
+                          },
+                          "updateId": {
+                            "type": "integer",
+                            "description": "修改人ID",
+                            "title": "updateId"
+                          },
+                          "createTime": {
+                            "type": "string",
+                            "description": "创建时间",
+                            "title": "createTime"
+                          },
+                          "countyId": {
+                            "type": "integer",
+                            "description": "区县ID",
+                            "title": "countyId"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "建筑名称",
+                            "title": "name"
+                          },
+                          "housingEstateId": {
+                            "type": "integer",
+                            "description": "小区ID",
+                            "title": "housingEstateId"
+                          },
+                          "id": {
+                            "type": "integer",
+                            "description": "楼栋ID",
+                            "title": "id"
+                          },
+                          "gridId": {
+                            "type": "integer",
+                            "description": "网格ID",
+                            "title": "gridId"
+                          },
+                          "communityId": {
+                            "type": "integer",
+                            "description": "社区ID",
+                            "title": "communityId"
+                          },
+                          "townshipId": {
+                            "type": "integer",
+                            "description": "乡镇ID",
+                            "title": "townshipId"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                }
+              }
+            ],
+            "responseExamples": [
+              {
+                "name": "成功示例",
+                "data": "{\"code\":200,\"msg\":\"success\",\"data\":[{\"address\":\"str\",\"center\":\"str\",\"creatorId\":1,\"updateTime\":1660552505916,\"single\":1,\"updateId\":1,\"createTime\":1660552505916,\"countyId\":1,\"name\":\"str\",\"housingEstateId\":1,\"id\":1,\"gridId\":1,\"communityId\":1,\"townshipId\":1}]}",
+                "responseId": 9881214935,
+                "ordering": 1
+              }
+            ],
+            "requestBody": {
+              "type": "application/json",
+              "parameters": [],
+              "jsonSchema": {
+                "type": "object"
+              }
+            },
+            "description": "building列表查询",
+            "tags": [],
+            "status": "developing",
+            "serverId": "",
+            "operationId": "",
+            "sourceUrl": "",
+            "ordering": 10,
+            "cases": [],
+            "mocks": [],
+            "customApiFields": "{}",
+            "advancedSettings": {},
+            "mockScript": {}
+          }
+        },
+      ]
+    }
+  ],
+  "environments": [
+    {
+      "baseUrl": "http://127.0.0.1",
+      "baseUrls": {
+        "default": "http://127.0.0.1"
+      },
+      "parameters": {},
+      "variables": [],
+      "name": "测试环境",
+      "type": "normal",
+      "visibility": "protected",
+      "ordering": 0,
+      "id": "4705447"
+    },
+    {
+      "baseUrl": "http://127.0.0.1",
+      "baseUrls": {
+        "default": "http://127.0.0.1"
+      },
+      "parameters": {},
+      "variables": [],
+      "name": "正式环境",
+      "type": "normal",
+      "visibility": "protected",
+      "ordering": 0,
+      "id": "4705448"
+    },
+    {
+      "baseUrl": "http://127.0.0.1:4523/mock/1367688",
+      "baseUrls": {
+        "default": "http://127.0.0.1:4523/mock/undefined"
+      },
+      "parameters": {},
+      "variables": [],
+      "name": "本地 Mock",
+      "type": "mock",
+      "visibility": "protected",
+      "ordering": 0,
+      "id": "4705449"
+    },
+    {
+      "baseUrl": "",
+      "baseUrls": {
+        "default": ""
+      },
+      "parameters": {},
+      "variables": [],
+      "name": "云端 Mock",
+      "type": "cloudMock",
+      "visibility": "protected",
+      "ordering": 0,
+      "id": "4705450"
+    }
+  ],
+  "commonScripts": [],
+  "globalVariables": [],
+  "commonParameters": null,
+  "projectSetting": {
+    "apiStatuses": [
+      "developing",
+      "testing",
+      "released",
+      "deprecated"
+    ],
+    "servers": [
+      {
+        "id": "default",
+        "name": "默认服务"
+      }
+    ],
+    "preProcessors": [],
+    "postProcessors": [],
+    "auth": {},
+    "cloudMock": {
+      "security": "free",
+      "token": "B0m6XljmSdIH5DYb8TDv27IXDqwBft2f",
+      "enable": false,
+      "tokenKey": "apifoxToken"
+    },
+    "initialDisabledMockIds": [],
+    "id": "1117667"
+  }
+}

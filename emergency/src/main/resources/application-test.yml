@@ -1,0 +1,127 @@
+server:
+  port: 38898
+
+spring:
+  datasource:
+    druid:
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost/mylife?useUnicode=true&characterEncoding=UTF8&serverTimezone=Asia/Shanghai
+      username: root
+      password: 123456
+      initial-size: 100
+      min-idle: 5
+      max-active: 100
+      max-wait: 500
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: select '1'
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-open-prepared-statements: 20
+      max-pool-prepared-statement-per-connection-size: 20
+      filters: stat,wall
+      filter:
+        stat:
+          log-slow-sql: true
+      connection-error-retry-attempts: 5
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  redis:
+    database: 1
+    host: 192.168.119.248
+    port: 6500
+    password: hlxredis
+    timeout: 6000ms
+    lettuce:
+      pool:
+        max-active: 1000
+        max-wait: -1ms
+        max-idle: 10
+        min-idle: 5
+  freemarker:
+    template-loader-path: classpath:/static/page/
+    prefix: .html
+
+#mybatis配置
+mybatis-plus:
+  #sql输出
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  #mapper-xml地址
+  mapper-locations:
+    - classpath:/mapper/**/**/*.xml
+    - classpath:/mapper/**/*.xml
+  global-config:
+    db-config:
+      logic-delete-field: is_delete
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+#日志配置
+logging:
+  file:
+    name: @log.path@/@artifactId@.log
+    max-size: 500MB
+  level:
+    root: INFO
+    com.netflix.discovery.shared.resolver.aws.ConfigClusterResolver: WARN
+
+base-config:
+  city-name: @city.name@
+  #登陆AES解密秘钥
+  login-decrypt-key: Wh87ZL8JpKrO6d53
+  #图形验证码图形存放地址
+  path: /home/static/auth_img/spt-emergency
+  #管理员ID
+  admin-role-id: -1
+  redis-online-key-pre: @redis.key@_online_num
+  file-path: /home/static/files/@artifactId@
+  file-error-excel-path: ${base-config.file-path}/errorExcel
+
+common:
+  auth:
+    filter:
+      #是否开启权限检查
+      verify-api: false
+      #放行地址
+      exclude:
+        #登录相关接口开放
+        login: /login/slideImgCode,/login/imgAuth,/login/web/signIn,/login/app/signIn,/login/app/crowd/register/login/slideImgCode,/login/imgAuth,/login/web/signIn,/login/app/signIn,/login/app/crowd/register,/login/app/securityQuestion/modifyPassword,/login/app/securityQuestion/verify,/login/app/securityQuestion,/login/web/simple
+      #是否开启接口调用次数限制
+      verify-limit: false
+      #单位时间(S)内最大访问数
+      max-count: 10
+      #限制时长(S)
+      rejectTime: 3600
+      #admin的角色ID 自动跳过API验证与接口次数验证
+      admin-id: ${base-config.admin-role-id}
+    token:
+      #TOKEN 在请求头里的名称
+      name: TOKEN
+      #TOKEN 存活时间
+      expire: 7200
+      #REDIS存储前置
+      prefix: @redis.key@_
+      open-terminal: false
+      #terminal: device
+  logging:
+    #是否开启日志
+    open-log: true
+  sdk:
+    #极光推送
+    jpush:
+      app-key: edfe054d617b49ad3e486e55
+      master-secret: a25f28e319c244e86d17676b
+      push-url: https://api.jpush.cn/v3/push
+
+orgCode : S4NbecfYB1BK4AJPGT6CVC
