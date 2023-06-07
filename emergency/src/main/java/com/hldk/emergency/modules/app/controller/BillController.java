@@ -137,5 +137,6 @@ public class BillController extends BaseServiceController {
     public ResponseJson getTypeNameConsumption(String type) {
         List<Bill> bill = billService.getTypeNameConsumption(type);
         return buildSuccessResult(bill);
+
     }
 }
