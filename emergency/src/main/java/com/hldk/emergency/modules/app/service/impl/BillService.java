@@ -71,4 +71,9 @@ public class BillService extends ServiceImpl<BillMapper, Bill> implements IBillS
     public List<BillTypeQueryAmount> getBillTypeQueryAmount() {
         return baseMapper.getBillTypeQueryAmount();
     }
+
+    @Override
+    public List<Bill> getDayConsumption(String day) {
+        return baseMapper.getDayConsumption(day);
+    }
 }

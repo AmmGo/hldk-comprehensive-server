@@ -112,9 +112,15 @@
     </select>
 
     <select id="getBillTypeQueryAmount" resultType="com.hldk.emergency.modules.app.entity.BillTypeQueryAmount">
-        SELECT type, type_name, ROUND(SUM(money), 2) AS amount
+        SELECT type, type_name, COUNT(*) AS count, ROUND(SUM(money), 2)  AS amount
         FROM life_bill
-        GROUP BY type, type_name;
+        GROUP BY type, type_name
+    </select>
+
+    <select id="getDayConsumption" resultType="com.hldk.emergency.modules.app.entity.Bill">
+        SELECT *
+        FROM life_bill
+        WHERE time LIKE (CONCAT( #{day}, '%'))
     </select>
 </mapper>
 

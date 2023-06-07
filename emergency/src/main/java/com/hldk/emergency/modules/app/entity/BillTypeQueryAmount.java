@@ -24,4 +24,7 @@ public class BillTypeQueryAmount {
     @TableField
     private String typeName;
 
+    @TableField
+    private Integer count;
+
 }

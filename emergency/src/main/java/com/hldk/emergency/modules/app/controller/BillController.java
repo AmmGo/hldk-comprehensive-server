@@ -124,4 +124,11 @@ public class BillController extends BaseServiceController {
         List<BillTypeQueryAmount> bill = billService.getBillTypeQueryAmount();
         return buildSuccessResult(bill);
     }
+
+    @LogMethod("查询某日消费列表")
+    @GetMapping("billDayConsumption")
+    public ResponseJson getDayConsumption(String day) {
+        List<Bill> bill = billService.getDayConsumption(day);
+        return buildSuccessResult(bill);
+    }
 }
