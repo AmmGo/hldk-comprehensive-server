@@ -122,5 +122,11 @@
         FROM life_bill
         WHERE time LIKE (CONCAT( #{day}, '%'))
     </select>
+
+    <select id="getTypeNameConsumption" resultType="com.hldk.emergency.modules.app.entity.Bill">
+        SELECT *
+        FROM life_bill
+        WHERE type_name = #{type}
+    </select>
 </mapper>
 
