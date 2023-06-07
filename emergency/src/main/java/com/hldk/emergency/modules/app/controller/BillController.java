@@ -131,4 +131,11 @@ public class BillController extends BaseServiceController {
         List<Bill> bill = billService.getDayConsumption(day);
         return buildSuccessResult(bill);
     }
+
+    @LogMethod("查询某类消费列表")
+    @GetMapping("billTypeNameConsumption")
+    public ResponseJson getTypeNameConsumption(String type) {
+        List<Bill> bill = billService.getTypeNameConsumption(type);
+        return buildSuccessResult(bill);
+    }
 }

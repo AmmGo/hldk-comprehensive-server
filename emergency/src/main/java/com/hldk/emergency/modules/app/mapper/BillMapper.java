@@ -46,4 +46,6 @@ public interface BillMapper extends BaseMapper<Bill> {
 
     List<Bill> getDayConsumption(@Param("day") String day);
 
+    List<Bill> getTypeNameConsumption(@Param("type") String type);
+
 }

@@ -61,4 +61,6 @@ public interface IBillService extends IService<Bill> {
 
     List<Bill> getDayConsumption(String day);
 
+    List<Bill> getTypeNameConsumption(String type);
+
 }
