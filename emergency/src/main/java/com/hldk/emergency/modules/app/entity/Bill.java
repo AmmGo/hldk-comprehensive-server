@@ -46,6 +46,10 @@ public class Bill{
     @TableField
     private String memo;
 
+    /**余额**/
+    @TableField
+    private String balance;
+
     /**消费时间**/
     @TableField
     private Date time;

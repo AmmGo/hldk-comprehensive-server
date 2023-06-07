@@ -3,6 +3,9 @@ package com.hldk.emergency.modules.app.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hldk.emergency.modules.app.entity.Bill;
+import com.hldk.emergency.modules.app.entity.BillMonthQueryAmount;
+import com.hldk.emergency.modules.app.entity.BillTypeQueryAmount;
+import com.hldk.emergency.utils.DoMainMap;
 
 import java.util.List;
 
@@ -45,5 +48,15 @@ public interface IBillService extends IService<Bill> {
 
 
     Bill getByIdType(Integer id);
+
+    String getLastBalance();
+
+    Bill getLastBill();
+
+    DoMainMap getBillCountAmount();
+
+    List<BillMonthQueryAmount> getBillMonthQueryAmount(String month);
+
+    List<BillTypeQueryAmount> getBillTypeQueryAmount();
 
 }

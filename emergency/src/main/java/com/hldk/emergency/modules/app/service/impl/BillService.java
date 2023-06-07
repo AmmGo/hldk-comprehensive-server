@@ -1,21 +1,24 @@
 package com.hldk.emergency.modules.app.service.impl;
 
-import com.hldk.emergency.modules.app.mapper.BillMapper;
-import com.hldk.emergency.modules.app.entity.Bill;
-import com.hldk.emergency.modules.app.service.IBillService;
-import org.springframework.stereotype.Service;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hldk.emergency.modules.app.entity.Bill;
+import com.hldk.emergency.modules.app.entity.BillMonthQueryAmount;
+import com.hldk.emergency.modules.app.entity.BillTypeQueryAmount;
+import com.hldk.emergency.modules.app.mapper.BillMapper;
+import com.hldk.emergency.modules.app.service.IBillService;
+import com.hldk.emergency.utils.DoMainMap;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * @author yjl
  * @date 2023-5-31 10:35:34
- *  业务逻辑层
+ * 业务逻辑层
  */
 @Service
-public class BillService extends ServiceImpl<BillMapper,Bill> implements IBillService {
+public class BillService extends ServiceImpl<BillMapper, Bill> implements IBillService {
 
     @Override
     public void addInfo(Bill bill) {
@@ -36,11 +39,36 @@ public class BillService extends ServiceImpl<BillMapper,Bill> implements IBillSe
 
     @Override
     public Page<Bill> findPageList(Page page, Bill bill) {
-        return baseMapper.findPageList(page,bill);
+        return baseMapper.findPageList(page, bill);
     }
 
     @Override
     public Bill getByIdType(Integer id) {
-        return  baseMapper.getByIdType(id);
+        return baseMapper.getByIdType(id);
+    }
+
+    @Override
+    public String getLastBalance() {
+        return baseMapper.getLastBalance();
+    }
+
+    @Override
+    public Bill getLastBill() {
+        return baseMapper.getLastBill();
+    }
+
+    @Override
+    public DoMainMap getBillCountAmount() {
+        return baseMapper.getCountAmount();
+    }
+
+    @Override
+    public List<BillMonthQueryAmount> getBillMonthQueryAmount(String month) {
+        return baseMapper.getBillMonthQueryAmount(month);
+    }
+
+    @Override
+    public List<BillTypeQueryAmount> getBillTypeQueryAmount() {
+        return baseMapper.getBillTypeQueryAmount();
     }
 }

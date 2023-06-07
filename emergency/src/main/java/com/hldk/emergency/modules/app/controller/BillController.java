@@ -2,18 +2,21 @@ package com.hldk.emergency.modules.app.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.hldk.emergency.modules.app.service.IBillService;
-import com.hldk.emergency.modules.app.entity.Bill;
-import com.hldk.emergency.modules.app.constant.BillConstant;
 import com.hldk.common.core.annotation.Insert;
 import com.hldk.common.core.annotation.Update;
 import com.hldk.common.core.base.BaseServiceController;
 import com.hldk.common.core.base.ResponseJson;
 import com.hldk.common.core.util.CheckUtil;
-import com.hldk.common.logging.annotation.*;
+import com.hldk.common.logging.annotation.LogApi;
+import com.hldk.common.logging.annotation.LogMethod;
+import com.hldk.emergency.modules.app.constant.BillConstant;
+import com.hldk.emergency.modules.app.entity.Bill;
+import com.hldk.emergency.modules.app.entity.BillMonthQueryAmount;
+import com.hldk.emergency.modules.app.entity.BillTypeQueryAmount;
+import com.hldk.emergency.modules.app.service.IBillService;
+import com.hldk.emergency.utils.DoMainMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -21,7 +24,6 @@ import java.util.List;
 /**
  * @author yjl
  * @date 2023-5-31 10:35:34
- * 
  */
 @RestController
 @RequestMapping(value = "bill")
@@ -50,7 +52,7 @@ public class BillController extends BaseServiceController {
     @LogMethod("根据ID删除")
     @DeleteMapping("deleteById")
     public ResponseJson deleteById(Integer id) {
-        CheckUtil.isNotNull(id,"id不得为空");
+        CheckUtil.isNotNull(id, "id不得为空");
         billService.removeById(id);
         return buildSuccessResult();
     }
@@ -73,7 +75,7 @@ public class BillController extends BaseServiceController {
 
     @LogMethod("分页查询")
     @GetMapping("pageList")
-    public ResponseJson pageList(Bill bill,Page page) {
+    public ResponseJson pageList(Bill bill, Page page) {
         QueryWrapper queryWrapper = createQueryWrapper(bill);
         queryWrapper.orderByDesc(BillConstant.ID);
         Page<Bill> pageList = billService.page(page, queryWrapper);
@@ -85,6 +87,41 @@ public class BillController extends BaseServiceController {
     public ResponseJson findByIdTypeName(Integer id) {
         CheckUtil.isNotNull(id, "id不得为空");
         Bill bill = billService.getByIdType(id);
+        return buildSuccessResult(bill);
+    }
+
+    @LogMethod("获取当前余额")
+    @GetMapping("lastBalance")
+    public ResponseJson lastBalance() {
+        String amount = billService.getLastBalance();
+        return buildSuccessResult(amount);
+    }
+
+    @LogMethod("最近一笔消费")
+    @GetMapping("lastBill")
+    public ResponseJson lastBill() {
+        Bill bill = billService.getLastBill();
+        return buildSuccessResult(bill);
+    }
+
+    @LogMethod("统计查询消费次数及其总支出")
+    @GetMapping("countAllPay")
+    public ResponseJson countAllPay() {
+        DoMainMap bill = billService.getBillCountAmount();
+        return buildSuccessResult(bill);
+    }
+
+    @LogMethod("统计查询消费次数及其总支出")
+    @GetMapping("billMonthQueryAmount")
+    public ResponseJson getBillMonthQueryAmount(String month) {
+        List<BillMonthQueryAmount> bill = billService.getBillMonthQueryAmount(month);
+        return buildSuccessResult(bill);
+    }
+
+    @LogMethod("统计每种消费的累计消费金额")
+    @GetMapping("billTypeQueryAmount")
+    public ResponseJson getBillTypeQueryAmount() {
+        List<BillTypeQueryAmount> bill = billService.getBillTypeQueryAmount();
         return buildSuccessResult(bill);
     }
 }
