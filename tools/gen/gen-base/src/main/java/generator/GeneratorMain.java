@@ -106,8 +106,8 @@ public class GeneratorMain {
          * 服务参数
          */
         codeConfig.setCreateServer(true);
-        codeConfig.setServerPath("F:\\HLWork\\HLXIDEA\\hldk-comprehensive-server\\emergency\\src\\main\\java\\com\\hldk\\emergency\\modules");
-        codeConfig.setServerPackageName("com.hldk.emergency.modules");
+        codeConfig.setServerPath("F:\\HLWork\\HLXIDEA\\oswtg\\ows\\src\\main\\java\\com\\osw\\oswtg\\modules");
+        codeConfig.setServerPackageName("com.osw.oswtg.modules");
         codeConfig.setCreateServerController(true);
         codeConfig.setCreateServerService(true);
         codeConfig.setCreateServerEntity(true);
@@ -115,7 +115,7 @@ public class GeneratorMain {
         codeConfig.setCreateServerConstant(true);
         codeConfig.setCreateServerDto(true);
         //XML 参数
-        codeConfig.setServerXmlPath("F:\\HLWork\\HLXIDEA\\hldk-comprehensive-server\\emergency\\src\\main\\resources\\mapper\\modules");
+        codeConfig.setServerXmlPath("F:\\HLWork\\HLXIDEA\\oswtg\\ows\\src\\main\\resources\\mapper\\modules");
         codeConfig.setCreateServerXml(true);
         //测试类
         /**
@@ -130,7 +130,7 @@ public class GeneratorMain {
         ConnectionUtil.init(codeConfig);
         CodeBuild codeBuild = new CodeBuild(codeConfig);
         BuildApiFox buildApiFox = new BuildApiFox(codeBuild.getEntityName(), codeBuild.getCodeTable());
-        buildApiFox.setPath("E:\\apifoxJson\\hldk-comprehensive-server");
+        buildApiFox.setPath("E:\\apifoxJson\\oswtg");
         buildApiFox.outPrint();
         codeBuild.write();
 
