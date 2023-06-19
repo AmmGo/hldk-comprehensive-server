@@ -1,0 +1,132 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.osw.oswtg.modules.app.mapper.BillMapper">
+    <resultMap id="billMap" type="com.osw.oswtg.modules.app.entity.Bill">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="money" property="money"/>
+        <result column="type" property="type"/>
+        <result column="type_name" property="typeName"/>
+        <result column="pay" property="pay"/>
+        <result column="memo" property="memo"/>
+        <result column="time" property="time"/>
+    </resultMap>
+    <sql id="allColumn">
+        a
+        .
+        id
+        as `id`,a.name as `name`,a.money as `money`,a.type as `type`,a.type_name as `type_name`,a.pay as `pay`,a.memo as `memo`,a.time as `time`
+    </sql>
+
+    <sql id="tableName">
+        life_bill
+        a
+    </sql>
+
+    <sql id="where">
+        <if test="null!=e">
+            <if test="e.id != null">
+                AND a.id = #{e.id}
+            </if>
+            <if test="e.name != null and e.name != ''">
+                AND a.name like concat('%',#{e.name},'%')
+            </if>
+            <if test="e.money != null and e.money != ''">
+                AND a.money = #{e.money}
+            </if>
+            <if test="e.type != null and e.type != ''">
+                AND a.type = #{e.type}
+            </if>
+            <if test="e.typeName != null and e.typeName != ''">
+                AND a.type_name = #{e.typeName}
+            </if>
+            <if test="e.pay != null">
+                AND a.pay = #{e.pay}
+            </if>
+            <if test="e.memo != null and e.memo != ''">
+                AND a.memo = #{e.memo}
+            </if>
+            <if test="e.time != null">
+                AND a.time = #{e.time}
+            </if>
+        </if>
+    </sql>
+
+
+    <select id="findPageList" resultType="com.osw.oswtg.modules.app.entity.Bill">
+        SELECT
+        <include refid="allColumn">
+        </include>
+        FROM
+        <include refid="tableName">
+        </include>
+        <where>
+            <include refid="where">
+            </include>
+        </where>
+        ORDER BY a.id desc
+    </select>
+
+    <select id="getByIdType" resultType="com.osw.oswtg.modules.app.entity.Bill">
+        SELECT life_bill.*, dict.`name` AS typeName
+        FROM life_bill
+                 JOIN dict ON life_bill.type = dict.id
+        WHERE life_bill.id = #{id};
+    </select>
+
+    <select id="getLastBalance" resultType="String">
+        SELECT balance
+        FROM life_bill
+        ORDER BY id DESC LIMIT 1;
+    </select>
+
+    <select id="getLastBill" resultType="com.osw.oswtg.modules.app.entity.Bill">
+        SELECT *
+        FROM life_bill
+        ORDER BY id DESC LIMIT 1;
+    </select>
+    <select id="getCountAmount" resultType="com.osw.oswtg.utils.DoMainMap">
+        SELECT SUM(money) AS amount, COUNT(*) AS count
+        FROM life_bill
+        WHERE pay = 0;
+    </select>
+
+    <select id="getBillMonthQueryAmount" resultType="com.osw.oswtg.modules.app.entity.BillMonthQueryAmount">
+        SELECT DATE_FORMAT(date_table.date, '%Y-%m-%d') AS date,
+        COALESCE(SUM(lb.money), 0) AS amount
+        FROM (
+            SELECT
+            DATE (CONCAT(#{month}, '-02')) + INTERVAL (a.num + b.num - 1) DAY AS date
+            FROM
+            (SELECT 0 AS num UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION
+            SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS a,
+            (SELECT 0 AS num UNION SELECT 10 UNION SELECT 20 UNION SELECT 30) AS b
+            WHERE
+            DATE (CONCAT( #{month}, '-02')) + INTERVAL (a.num + b.num - 1) DAY &lt;= LAST_DAY(CONCAT(#{month}, '-02'))
+            ) AS date_table
+            LEFT JOIN life_bill AS lb
+        ON DATE (lb.time) = date_table.date
+        GROUP BY date_table.date
+        ORDER BY date_table.date ASC;
+    </select>
+
+    <select id="getBillTypeQueryAmount" resultType="com.osw.oswtg.modules.app.entity.BillTypeQueryAmount">
+        SELECT type, type_name, COUNT(*) AS count, ROUND(SUM(money), 2)  AS amount
+        FROM life_bill
+        GROUP BY type, type_name
+    </select>
+
+    <select id="getDayConsumption" resultType="com.osw.oswtg.modules.app.entity.Bill">
+        SELECT *
+        FROM life_bill
+        WHERE time LIKE (CONCAT( #{day}, '%'))
+    </select>
+
+    <select id="getTypeNameConsumption" resultType="com.osw.oswtg.modules.app.entity.Bill">
+        SELECT *
+        FROM life_bill
+        WHERE type_name = #{type}
+    </select>
+</mapper>
+
